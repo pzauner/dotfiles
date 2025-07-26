@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Battery_barChart_position</key>
+	<integer>3</integer>
+	<key>Battery_batteryDetails_position</key>
+	<integer>0</integer>
+	<key>Battery_battery_color</key>
+	<true/>
+	<key>Battery_battery_details_mode</key>
+	<string>percentageAndTime</string>
+	<key>Battery_battery_position</key>
+	<integer>4</integer>
+	<key>Battery_label_position</key>
+	<integer>1</integer>
+	<key>Battery_mini_position</key>
+	<integer>2</integer>
+	<key>Battery_oneView</key>
+	<true/>
+	<key>Battery_state</key>
+	<false/>
+	<key>Battery_widget</key>
+	<string>battery_details</string>
+	<key>CPU_barChart_position</key>
+	<integer>0</integer>
+	<key>CPU_label_position</key>
+	<integer>3</integer>
+	<key>CPU_lineChartHistory</key>
+	<integer>600</integer>
+	<key>CPU_lineChart_position</key>
+	<integer>2</integer>
+	<key>CPU_line_chart_label</key>
+	<false/>
+	<key>CPU_line_chart_value</key>
+	<false/>
+	<key>CPU_mini_position</key>
+	<integer>1</integer>
+	<key>CPU_pieChart_position</key>
+	<integer>4</integer>
+	<key>CPU_splitValue</key>
+	<false/>
+	<key>CPU_state</key>
+	<true/>
+	<key>CPU_tachometer_position</key>
+	<integer>5</integer>
+	<key>CPU_updateInterval</key>
+	<integer>3</integer>
+	<key>CPU_usagePerCore</key>
+	<true/>
+	<key>CPU_widget</key>
+	<string>bar_chart</string>
+	<key>CombinedModules</key>
+	<false/>
+	<key>Disk_state</key>
+	<false/>
+	<key>GPU_barChart_position</key>
+	<integer>1</integer>
+	<key>GPU_label_position</key>
+	<integer>2</integer>
+	<key>GPU_lineChart_position</key>
+	<integer>3</integer>
+	<key>GPU_mini_position</key>
+	<integer>0</integer>
+	<key>GPU_state</key>
+	<false/>
+	<key>GPU_tachometer_position</key>
+	<integer>4</integer>
+	<key>GPU_widget</key>
+	<string>mini</string>
+	<key>LaunchAtLoginNext</key>
+	<true/>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{800, 448}</string>
+	<key>NSNavPanelExpandedStateForSaveMode</key>
+	<true/>
+	<key>NSStatusItem Preferred Position CPU_bar_chart</key>
+	<real>522</real>
+	<key>NSStatusItem Preferred Position Network</key>
+	<real>279</real>
+	<key>NSStatusItem Preferred Position RAM_mini</key>
+	<real>578</real>
+	<key>NSStatusItem Preferred Position Sensors_sensors</key>
+	<real>379</real>
+	<key>NSStatusItem Restore Position Battery</key>
+	<integer>321</integer>
+	<key>NSStatusItem Restore Position GPU_mini</key>
+	<integer>590</integer>
+	<key>NSStatusItem Restore Position Network_speed</key>
+	<integer>353</integer>
+	<key>NSStatusItem Restore Position RAM_memory</key>
+	<integer>512</integer>
+	<key>NSToolbar Configuration eu.exelban.Stats.Settings.Toolbar</key>
+	<dict>
+		<key>TB Display Mode</key>
+		<integer>1</integer>
+		<key>TB Icon Size Mode</key>
+		<integer>1</integer>
+		<key>TB Is Shown</key>
+		<true/>
+		<key>TB Size Mode</key>
+		<integer>1</integer>
+	</dict>
+	<key>NSWindow Frame NSNavPanelAutosaveName</key>
+	<string>560 492 800 448 0 0 1920 1200 </string>
+	<key>Network_chartHistory</key>
+	<integer>600</integer>
+	<key>Network_chartScale</key>
+	<string>none</string>
+	<key>Network_label_position</key>
+	<integer>3</integer>
+	<key>Network_networkChart_position</key>
+	<integer>1</integer>
+	<key>Network_network_chart_box</key>
+	<false/>
+	<key>Network_network_chart_frame</key>
+	<false/>
+	<key>Network_network_chart_historyCount</key>
+	<integer>60</integer>
+	<key>Network_network_chart_label</key>
+	<false/>
+	<key>Network_network_chart_reverseOrder</key>
+	<false/>
+	<key>Network_oneView</key>
+	<true/>
+	<key>Network_publicIP</key>
+	<false/>
+	<key>Network_speed_icon</key>
+	<string>none</string>
+	<key>Network_speed_position</key>
+	<integer>0</integer>
+	<key>Network_speed_units</key>
+	<true/>
+	<key>Network_speed_value</key>
+	<true/>
+	<key>Network_speed_valueAlignment</key>
+	<string>left</string>
+	<key>Network_speed_valueColor</key>
+	<true/>
+	<key>Network_state</key>
+	<true/>
+	<key>Network_state_position</key>
+	<integer>4</integer>
+	<key>Network_text_position</key>
+	<integer>2</integer>
+	<key>Network_widget</key>
+	<string>speed,network_chart</string>
+	<key>Network_widgetActivationThreshold</key>
+	<integer>0</integer>
+	<key>RAM_barChart_position</key>
+	<integer>3</integer>
+	<key>RAM_label_position</key>
+	<integer>4</integer>
+	<key>RAM_lineChart_position</key>
+	<integer>2</integer>
+	<key>RAM_line_chart_box</key>
+	<false/>
+	<key>RAM_line_chart_color</key>
+	<string>orange</string>
+	<key>RAM_line_chart_frame</key>
+	<false/>
+	<key>RAM_line_chart_label</key>
+	<false/>
+	<key>RAM_line_chart_value</key>
+	<true/>
+	<key>RAM_line_chart_valueColor</key>
+	<true/>
+	<key>RAM_memory_position</key>
+	<integer>1</integer>
+	<key>RAM_mini_position</key>
+	<integer>0</integer>
+	<key>RAM_pieChart_position</key>
+	<integer>5</integer>
+	<key>RAM_state</key>
+	<true/>
+	<key>RAM_tachometer_position</key>
+	<integer>6</integer>
+	<key>RAM_widget</key>
+	<string>mini</string>
+	<key>Sensors_barChart_position</key>
+	<integer>2</integer>
+	<key>Sensors_bar_chart_box</key>
+	<false/>
+	<key>Sensors_bar_chart_frame</key>
+	<false/>
+	<key>Sensors_hid</key>
+	<true/>
+	<key>Sensors_label_position</key>
+	<integer>1</integer>
+	<key>Sensors_oneView</key>
+	<false/>
+	<key>Sensors_stack_position</key>
+	<integer>0</integer>
+	<key>Sensors_state</key>
+	<true/>
+	<key>Sensors_unknown</key>
+	<false/>
+	<key>Sensors_updateInterval</key>
+	<integer>2</integer>
+	<key>Sensors_widget</key>
+	<string>sensors</string>
+	<key>runAtLoginInitialized</key>
+	<true/>
+	<key>sensor_Average System Total</key>
+	<false/>
+	<key>sensor_Hottest CPU</key>
+	<true/>
+	<key>sensor_ID0R</key>
+	<true/>
+	<key>sensor_NAND CH0 temp_popup</key>
+	<false/>
+	<key>sensor_PDTR</key>
+	<true/>
+	<key>sensor_PMU VP0u_popup</key>
+	<false/>
+	<key>sensor_PMU tcal_popup</key>
+	<false/>
+	<key>sensor_PMU tdev2_popup</key>
+	<false/>
+	<key>sensor_PMU tdev3_popup</key>
+	<false/>
+	<key>sensor_PMU tdev4_popup</key>
+	<false/>
+	<key>sensor_PMU tdev5_popup</key>
+	<false/>
+	<key>sensor_PMU tdev6_popup</key>
+	<false/>
+	<key>sensor_PMU tdev7_popup</key>
+	<false/>
+	<key>sensor_PMU tdev8_popup</key>
+	<false/>
+	<key>sensor_PMU tdie1_popup</key>
+	<false/>
+	<key>sensor_PMU tdie2_popup</key>
+	<false/>
+	<key>sensor_PMU tdie3_popup</key>
+	<false/>
+	<key>sensor_PMU tdie4_popup</key>
+	<false/>
+	<key>sensor_PMU tdie5_popup</key>
+	<false/>
+	<key>sensor_PMU tdie6_popup</key>
+	<false/>
+	<key>sensor_PMU tdie7_popup</key>
+	<false/>
+	<key>sensor_PMU tdie8_popup</key>
+	<false/>
+	<key>sensor_PMU vldo0_popup</key>
+	<false/>
+	<key>sensor_PMU vldo10_popup</key>
+	<false/>
+	<key>sensor_PMU vldo11_popup</key>
+	<false/>
+	<key>sensor_PMU vldo12_popup</key>
+	<false/>
+	<key>sensor_PMU vldo14_popup</key>
+	<false/>
+	<key>sensor_PMU vldo15_popup</key>
+	<false/>
+	<key>sensor_PMU vldo17_popup</key>
+	<false/>
+	<key>sensor_PMU vldo1_popup</key>
+	<false/>
+	<key>sensor_PMU vldo21_popup</key>
+	<false/>
+	<key>sensor_PMU vldo3_popup</key>
+	<false/>
+	<key>sensor_PMU vldo5_popup</key>
+	<false/>
+	<key>sensor_PMU2 VR0u_popup</key>
+	<false/>
+	<key>sensor_PMU2 tcal_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdev2_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdev4_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdev5_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie1_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie2_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie3_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie4_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie5_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie6_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie7_popup</key>
+	<false/>
+	<key>sensor_PMU2 tdie8_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo0_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo10_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo13_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo16_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo18_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo19_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo6_popup</key>
+	<false/>
+	<key>sensor_PMU2 vldo9_popup</key>
+	<false/>
+	<key>sensor_PPBR</key>
+	<false/>
+	<key>sensor_PSTR</key>
+	<true/>
+	<key>sensor_Te05_popup</key>
+	<false/>
+	<key>sensor_Te0L_popup</key>
+	<false/>
+	<key>sensor_Te0P_popup</key>
+	<false/>
+	<key>sensor_Total System Consumption</key>
+	<false/>
+	<key>sensor_VD0R</key>
+	<true/>
+	<key>sensor_gas gauge battery_popup</key>
+	<false/>
+	<key>setupProcess</key>
+	<true/>
+	<key>support_ts</key>
+	<integer>1752075349</integer>
+	<key>telemetry</key>
+	<false/>
+	<key>updater_check_ts</key>
+	<integer>1752194039</integer>
+	<key>version</key>
+	<string>2.11.46</string>
+</dict>
+</plist>
