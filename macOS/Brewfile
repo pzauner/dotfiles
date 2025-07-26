@@ -6,103 +6,200 @@ tap "lihaoyun6/tap"
 tap "macos-fuse-t/cask"
 tap "majd/repo"
 tap "nikitabobko/tap"
+# Arduino command-line interface
 brew "arduino-cli"
+# Perf monitoring CLI tool for Apple Silicon
 brew "asitop"
+# Automatic configure script builder
 brew "autoconf"
+# Collection of over 500 reusable autoconf macros
 brew "autoconf-archive"
+# Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
+# Control and limit battery charging on Apple Silicon MacBooks
 brew "batt"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Object-file caching compiler wrapper
 brew "ccache"
+# CD/DVD/Blu-ray premastering and recording software
 brew "cdrtools"
+# GNU Transport Layer Security (TLS) Library
 brew "gnutls"
+# Versatile implementation of the Network Time Protocol (NTP)
 brew "chrony"
+# Cross-platform make
 brew "cmake"
+# GNU File, Shell, and Text utilities
 brew "coreutils"
+# Perl lib for reading and writing EXIF metadata
 brew "exiftool"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream audio and video
 brew "ffmpeg"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU awk utility
 brew "gawk"
+# GNU compiler collection
 brew "gcc"
+# Platform built on V8 to build network applications
 brew "node"
+# Interact with Google Gemini AI models from the command-line
 brew "gemini-cli"
+# Distributed revision control system
 brew "git"
+# GNU version of the tar archiving utility
 brew "gnu-tar"
+# GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
+# Tools and libraries to manipulate images in many formats
 brew "imagemagick"
+# GNU utilities for networking
 brew "inetutils", link: false
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
 brew "iperf3"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Open source neural network based chess engine
 brew "lc0"
+# Next-gen compiler infrastructure
 brew "llvm"
+# Terminal-based visual file manager
 brew "midnight-commander"
+# Menu-driven communications program
 brew "minicom"
+# Mac command-line tool that automatically downloads macOS Firmwares / Installers
 brew "mist-cli"
+# Netwide Assembler (NASM) is an 80x86 assembler
 brew "nasm"
+# Fast, highly customisable system info script
 brew "neofetch"
+# Small build system for use with gyp or CMake
 brew "ninja"
+# Port scanning utility for large networks
 brew "nmap"
+# Statically typed programming language for scientific computations
 brew "numbat"
+# Manage multiple Node.js versions
 brew "nvm"
+# Adds an OCR text layer to scanned PDF files
 brew "ocrmypdf"
+# Swiss-army knife of markup format conversion
 brew "pandoc"
+# Pinentry for GPG on Mac
 brew "pinentry-mac"
+# Package compiler and linker metadata toolkit
 brew "pkgconf"
+# PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
+# Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Generic machine emulator and virtualizer
 brew "qemu"
+# Cross-platform application and UI framework
 brew "qt"
+# File browser
 brew "ranger"
+# Rsync for cloud storage
 brew "rclone"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Command-line interface for https://speedtest.net bandwidth tests
 brew "speedtest-cli"
+# Tool to impose load on and stress test a computer system
 brew "stress"
+# Version control system designed to be a better CVS
 brew "subversion"
+# User interface to the TELNET protocol
 brew "telnet"
+# Enables extra languages support for Tesseract
 brew "tesseract-lang"
+# Free software distribution for the TeX typesetting system
 brew "texlive"
+# Terminal multiplexer
 brew "tmux"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Markup-based typesetting system
 brew "typst"
+# Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# Executes a program periodically, showing output fullscreen
 brew "watch"
+# Convert HTML to PDF
 brew "weasyprint"
+# Internet file retriever
 brew "wget"
+# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Feature-rich command-line audio/video downloader
 brew "yt-dlp"
+# Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd", link: false
+# Enable Windows-like alt-tab
 cask "alt-tab"
+# Display management tool
 cask "betterdisplay"
+# Tool to show live information about the batteries in various devices
 cask "coconutbattery"
+# Write, edit, and chat about your code with AI
 cask "cursor"
+# Tool to hide status bar icons
 cask "dozer"
 cask "font-symbols-only-nerd-font"
+# Kext-less implementation of FUSE
 cask "fuse-t"
+# SSHFS implementation based on FUSE-T
 cask "fuse-t-sshfs"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Tools to protect your files
 cask "gpg-suite-no-mail"
+# Graphically shows disk usage within a file system
 cask "grandperspective"
+# Image Processing and Analysis in Java
 cask "imagej"
+# Vector graphics editor
 cask "inkscape"
+# Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Offline AI chat tool
 cask "jan"
+# Discover, download, and run local LLMs
 cask "lm-studio"
+# Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
+# Desktop sync client for Nextcloud software products
 cask "nextcloud-vfs"
+# Finds large, unwanted files and deletes them
 cask "omnidisksweeper"
+# Programmable solid 3D CAD modeller
 cask "openscad"
+# G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 cask "prusaslicer"
+# Control your tools with a few keystrokes
 cask "raycast"
+# System monitor for the menu bar
 cask "stats"
+# Pin any window to the top of your screen.
 cask "topit"
+# Virtual machines UI using QEMU
 cask "utm"
+# Wine wrapper built with SwiftUI
 cask "whisky"
+# Network protocol analyzer
 cask "wireshark-app"
+# HTML to PDF renderer
 cask "wkhtmltopdf"
+# View output from scripts in the menu bar
 cask "xbar"
 vscode "adrienleloup.andromeda-zed"
 vscode "continue.continue"
