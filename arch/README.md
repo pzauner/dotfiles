@@ -134,7 +134,22 @@ Zusätzlich zu den interaktiven Funktionen verbessert die `99-user-functions.zsh
 
 ### 10. Statisches Terminal-Logo (fastfetch)
 
--   **Problem**: Beim Start einer neuen Terminalsitzung wurde durch das HyDE-Standard-Skript in `fastfetch` ein zufälliges oder variierendes ASCII-Logo angezeigt.
--   **Lösung**: Um eine konsistente Darstellung zu gewährleisten, wurde die `fastfetch`-Konfiguration angepasst, sodass immer das Arch-Linux-Logo angezeigt wird.
+-   **Problem**: Beim Start einer neuen Terminalsitzung wurde durch das HyDE-Standard-Skript in `fastfetch` (`fastfetch.sh logo`) ein zufälliges oder variierendes ASCII-Logo angezeigt.
+-   **Lösung**: Um eine konsistente Darstellung zu gewährleisten, wurde der Skriptaufruf angepasst, sodass immer das Logo des erkannten Betriebssystems angezeigt wird.
 -   **Konfigurationsdatei**: `~/.config/fastfetch/config.jsonc`
--   **Änderung**: Der Wert `"logo": { "source": ... }` wurde von einem dynamischen Skriptaufruf auf den statischen Wert `"arch"` geändert.
+-   **Änderung**: Der Wert `"logo": { "source": ... }` wurde von `"\"$(fastfetch.sh logo)\""` auf `"\"$(fastfetch.sh logo --os)\""` geändert. Das `--os`-Flag sorgt für eine deterministische Auswahl.
+
+### 11. Sicherheitshinweis: Veröffentlichung von Paketlisten
+
+Die Veröffentlichung der `packages.txt`- und `aur-packages.txt`-Dateien bietet den Vorteil einer reproduzierbaren Installation, birgt jedoch auch ein relevantes Sicherheitsrisiko, insbesondere im Kontext des Arch User Repository (AUR).
+
+Insofern also: Bitte nicht aufcybern :D
+
+-   **Angriffsvektor (Supply-Chain-Angriff via AUR)**:
+    1.  **Zielidentifikation**: Ein Angreifer kann anhand der `aur-packages.txt` öffentlich einsehen, welche potenziell seltenen oder schlecht gewarteten Pakete auf dem System installiert sind.
+    2.  **Paketübernahme**: Sollte eines dieser Pakete vom ursprünglichen Maintainer als "verwaist" (orphaned) markiert werden, kann der Angreifer es übernehmen.
+    3.  **Injektion von Schadcode**: Der Angreifer kann eine neue Version des Pakets veröffentlichen, deren `PKGBUILD`-Datei bösartigen Code enthält (z.B. Befehle, die im Hintergrund ausgeführt werden).
+    4.  **Kompromittierung**: Bei einem Systemupdate über einen AUR-Helper (wie `yay`) wird das manipulierte Paket als legitimes Update angeboten. Wenn die `PKGBUILD`-Änderungen nicht sorgfältig geprüft werden, kann der Schadcode beim Bauen des Pakets ausgeführt werden.
+-   **Empfehlung**:
+    -   **`PKGBUILD`-Prüfung**: Die wichtigste Verteidigungslinie ist die konsequente und sorgfältige Überprüfung der Diffs von `PKGBUILD`-Dateien vor jeder Installation oder jedem Update aus dem AUR.
+    -   **Minimierung**: Die Anzahl der AUR-Pakete sollte auf das notwendige Minimum reduziert werden.
