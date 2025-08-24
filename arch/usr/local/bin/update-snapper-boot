@@ -1,51 +1,113 @@
 #!/bin/bash
-# snapper-boot: Einfaches Skript zum Erstellen von Boot-Einträgen für Snapper-Snapshots
-# Dieses Skript integriert Snapper-Snapshots in systemd-boot
+# update-snapper-boot: Erstellt und aktualisiert dynamisch Boot-Einträge
+# für Snapper-Snapshots in systemd-boot.
+#
+# - Liest Kernel-Parameter aus einem bestehenden Boot-Eintrag (inkl. LUKS)
+# - Enumeriert Snapper-Snapshots über /.snapshots/<id>/snapshot statt snapper list
+# - Staging/Restore: Löscht alte Einträge nur, wenn neue erfolgreich erzeugt wurden
 
 set -e
+set -o pipefail
 
-# Konfiguration
+# --- Konfiguration ---
 BOOT_DIR="/boot"
 ENTRIES_DIR="$BOOT_DIR/loader/entries"
+SNAPPER_ROOT="/.snapshots"
 SNAPPER_CONFIG="root"
+KERNEL_NAME="linux-zen"  # z.B. linux, linux-lts, linux-zen
 
-# Prüfe ob wir root sind
+# --- Validierung ---
 if [[ $EUID -ne 0 ]]; then
-   echo "Dieses Skript muss als root ausgeführt werden."
-   exit 1
+  echo "Fehler: Dieses Skript muss als root ausgeführt werden." >&2
+  exit 1
 fi
 
-# Prüfe ob systemd-boot verwendet wird
 if [[ ! -d "$ENTRIES_DIR" ]]; then
-    echo "systemd-boot scheint nicht installiert zu sein."
-    exit 1
+  echo "Fehler: systemd-boot scheint nicht installiert zu sein ($ENTRIES_DIR nicht gefunden)." >&2
+  exit 1
 fi
 
-echo "Erstelle Boot-Einträge für Snapper-Snapshots..."
+# --- Vorlage beziehen ---
+echo "Aktualisiere Boot-Einträge für Snapper-Snapshots..."
+TEMPLATE_ENTRY=$(ls -1t "$ENTRIES_DIR"/*"$KERNEL_NAME".conf 2>/dev/null | grep -v -e 'snap-' -e 'fallback' | head -n 1 || true)
+if [[ -z "$TEMPLATE_ENTRY" || ! -f "$TEMPLATE_ENTRY" ]]; then
+  echo "Fehler: Konnte keine Vorlagen-Boot-Datei für Kernel '$KERNEL_NAME' finden." >&2
+  exit 1
+fi
 
-# Lösche alte Snapshot-Einträge
-rm -f "$ENTRIES_DIR"/snap-*.conf
+echo "Verwende '$TEMPLATE_ENTRY' als Vorlage."
+BASE_OPTIONS=$(grep -oP '^\s*options\s+\K.*' "$TEMPLATE_ENTRY" || true)
+if [[ -z "$BASE_OPTIONS" ]]; then
+  echo "Fehler: Konnte keine gültige 'options'-Zeile in '$TEMPLATE_ENTRY' finden." >&2
+  exit 1
+fi
 
-# Erstelle neue Einträge für jeden Snapshot
-snapper -c "$SNAPPER_CONFIG" list --type single | tail -n +3 | while read -r line; do
-    SNAP_NUM=$(echo "$line" | awk '{print $1}')
-    SNAP_DATE=$(echo "$line" | awk '{print $4 " " $5 " " $6}')
-    
-    if [[ "$SNAP_NUM" == "0" ]]; then
-        continue
+# --- Snapshots enumerieren ---
+if [[ ! -d "$SNAPPER_ROOT" ]]; then
+  echo "Hinweis: Kein $SNAPPER_ROOT gefunden. Es werden keine Einträge erstellt."
+  exit 0
+fi
+
+# Sammle numerische Snapshot-IDs, absteigend sortiert
+mapfile -t SNAP_IDS < <(find "$SNAPPER_ROOT" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null \
+  | grep -E '^[0-9]+$' | sort -nr)
+
+if [[ ${#SNAP_IDS[@]} -eq 0 ]]; then
+  echo "Keine Snapshots gefunden. Es werden keine Einträge erstellt."
+  exit 0
+fi
+
+# --- Staging: neue Einträge in Temp-Verzeichnis erstellen ---
+STAGING_DIR=$(mktemp -d)
+LATEST_CREATED=""
+CREATED_COUNT=0
+
+for SNAP_ID in "${SNAP_IDS[@]}"; do
+  SNAP_DIR="$SNAPPER_ROOT/$SNAP_ID"
+  # Erzeuge nur Einträge, wenn das Snapshot-Subvolume existiert
+  if [[ ! -d "$SNAP_DIR/snapshot" ]]; then
+    continue
+  fi
+
+  # Datum/Zeit aus info.xml (falls vorhanden) ermitteln
+  SNAP_TITLE_SUFFIX=""
+  INFO_XML="$SNAP_DIR/info.xml"
+  if [[ -f "$INFO_XML" ]]; then
+    RAW_DATE=$(grep -oP '<date>\K[^<]+' "$INFO_XML" | head -n1 || true)
+    if DATE_FMT=$(date -d "$RAW_DATE" '+%Y-%m-%d %H:%M:%S' 2>/dev/null); then
+      SNAP_TITLE_SUFFIX=" ($DATE_FMT)"
     fi
-    
-    ENTRY_FILE="$ENTRIES_DIR/snap-$SNAP_NUM.conf"
-    
-    cat > "$ENTRY_FILE" << BOOT_ENTRY
-title   Arch Linux Snapshot $SNAP_NUM ($SNAP_DATE)
-linux   /vmlinuz-linux-zen
-initrd  /initramfs-linux-zen.img
-options root=UUID=$(findmnt -n -o UUID /) ro rootflags=subvol=@/.snapshots/$SNAP_NUM/snapshot
+  fi
+
+  # Optionszeile anpassen: subvol auf Snapshot setzen
+  SNAPSHOT_OPTIONS=$(sed -E "s|rootflags=subvol=[^ ]+|rootflags=subvol=@/.snapshots/$SNAP_ID/snapshot|" <<< "$BASE_OPTIONS")
+
+  ENTRY_FILE="$STAGING_DIR/snap-$SNAP_ID.conf"
+  cat > "$ENTRY_FILE" <<BOOT_ENTRY
+title   Arch Linux Snapshot #$SNAP_ID$SNAP_TITLE_SUFFIX
+linux   /vmlinuz-$KERNEL_NAME
+initrd  /initramfs-$KERNEL_NAME.img
+options $SNAPSHOT_OPTIONS
 BOOT_ENTRY
-    
-    echo "Erstellt: $ENTRY_FILE"
+
+  ((CREATED_COUNT+=1))
+  [[ -z "$LATEST_CREATED" ]] && LATEST_CREATED="$SNAP_ID"
+  # verbose staging output entfernt
+
 done
 
-echo "Boot-Einträge für Snapper-Snapshots wurden aktualisiert."
-echo "Starte deinen Computer neu und wähle im Boot-Menü einen Snapshot aus."
+# --- Commit oder Restore ---
+if [[ $CREATED_COUNT -gt 0 ]]; then
+  # Entferne alte Snapshot-Einträge und verschiebe neue ins Ziel
+  echo "Alte Snapshot-Einträge werden ersetzt..."
+  rm -f "$ENTRIES_DIR"/snap-*.conf
+  mv "$STAGING_DIR"/snap-*.conf "$ENTRIES_DIR"/ 2>/dev/null || true
+  echo "Boot-Einträge für Snapper-Snapshots wurden erfolgreich aktualisiert."
+  echo "$CREATED_COUNT Snapshot-Einträge erzeugt."
+  echo "Neuester verfügbarer Snapshot im Boot-Menü ist #$LATEST_CREATED."
+else
+  echo "Keine neuen, gültigen Snapshot-Einträge zum Erstellen gefunden. Vorhandene Einträge bleiben unverändert."
+fi
+
+# Aufräumen
+rm -rf "$STAGING_DIR"

@@ -94,6 +94,7 @@ Um sicherzustellen, dass diese Listen den aktuellen Stand des Systems widerspieg
     -   Diese Funktionalität wird durch ein benutzerdefiniertes Skript unter `/usr/local/bin/update-snapper-boot` bereitgestellt.
     -   Dieses Skript wird nach jeder `pacman`-Transaktion durch den manuell erstellten Hook `/etc/pacman.d/hooks/update-snapper-boot.hook` aufgerufen.
     -   Es scannt alle verfügbaren Snapper-Snapshots und generiert daraus automatisch die notwendigen Einträge für den `systemd-boot`-Bootloader.
+    -   Das Skript liest nun automatisch die Kernel-Parameter aus einem bestehenden Eintrag, um die LUKS-Verschlüsselung zu unterstützen, und sortiert die Snapshots, sodass der neueste zuerst angezeigt wird.
 -   **Zusammenspiel**: Die beiden Systeme ergänzen sich. `snap-pac` ist für die Erstellung der Snapshots verantwortlich, während das benutzerdefinierte Skript die notwendigen Bootloader-Einträge generiert, um diese Snapshots bootfähig zu machen.
 
 ### 8. Benutzerdefinierte Shell-Funktionen
