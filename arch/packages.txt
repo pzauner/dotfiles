@@ -24,6 +24,7 @@ fastfetch
 ffmpegthumbs
 firefox
 fzf
+gedit
 git
 gnome-disk-utility
 grim
@@ -35,6 +36,7 @@ hyprpicker
 hyprsunset
 imagemagick
 jq
+kcalc
 kde-cli-tools
 kitty
 konsole
@@ -46,6 +48,7 @@ linux-firmware
 linux-firmware-qlogic
 linux-zen
 nano
+neovim
 network-manager-applet
 networkmanager
 nextcloud-client
@@ -69,6 +72,7 @@ polkit-gnome
 python-injector
 python-pid
 python-semantic-version
+qalculate-gtk
 qt5-graphicaleffects
 qt5-imageformats
 qt5-quickcontrols
@@ -85,11 +89,14 @@ signal-desktop
 slurp
 snap-pac
 snapper
+speedcrunch
 spotify
 starship
 steam
 swww
 tailscale
+tesseract
+tesseract-data-eng
 ttf-dejavu
 ttf-droid
 ttf-ibm-plex
