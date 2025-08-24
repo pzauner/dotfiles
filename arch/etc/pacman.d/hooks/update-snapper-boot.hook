@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Aktualisiere Boot-Einträge für Snapper-Snapshots nach Paket-Änderungen
+When = PostTransaction
+Exec = /usr/local/bin/update-snapper-boot

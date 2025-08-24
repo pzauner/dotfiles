@@ -1,0 +1,51 @@
+#!/bin/bash
+# snapper-boot: Einfaches Skript zum Erstellen von Boot-Einträgen für Snapper-Snapshots
+# Dieses Skript integriert Snapper-Snapshots in systemd-boot
+
+set -e
+
+# Konfiguration
+BOOT_DIR="/boot"
+ENTRIES_DIR="$BOOT_DIR/loader/entries"
+SNAPPER_CONFIG="root"
+
+# Prüfe ob wir root sind
+if [[ $EUID -ne 0 ]]; then
+   echo "Dieses Skript muss als root ausgeführt werden."
+   exit 1
+fi
+
+# Prüfe ob systemd-boot verwendet wird
+if [[ ! -d "$ENTRIES_DIR" ]]; then
+    echo "systemd-boot scheint nicht installiert zu sein."
+    exit 1
+fi
+
+echo "Erstelle Boot-Einträge für Snapper-Snapshots..."
+
+# Lösche alte Snapshot-Einträge
+rm -f "$ENTRIES_DIR"/snap-*.conf
+
+# Erstelle neue Einträge für jeden Snapshot
+snapper -c "$SNAPPER_CONFIG" list --type single | tail -n +3 | while read -r line; do
+    SNAP_NUM=$(echo "$line" | awk '{print $1}')
+    SNAP_DATE=$(echo "$line" | awk '{print $4 " " $5 " " $6}')
+    
+    if [[ "$SNAP_NUM" == "0" ]]; then
+        continue
+    fi
+    
+    ENTRY_FILE="$ENTRIES_DIR/snap-$SNAP_NUM.conf"
+    
+    cat > "$ENTRY_FILE" << BOOT_ENTRY
+title   Arch Linux Snapshot $SNAP_NUM ($SNAP_DATE)
+linux   /vmlinuz-linux-zen
+initrd  /initramfs-linux-zen.img
+options root=UUID=$(findmnt -n -o UUID /) ro rootflags=subvol=@/.snapshots/$SNAP_NUM/snapshot
+BOOT_ENTRY
+    
+    echo "Erstellt: $ENTRY_FILE"
+done
+
+echo "Boot-Einträge für Snapper-Snapshots wurden aktualisiert."
+echo "Starte deinen Computer neu und wähle im Boot-Menü einen Snapshot aus."
