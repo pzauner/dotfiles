@@ -1,0 +1,14 @@
+aic94xx-firmware
+ckan
+cursor-bin
+python-injector
+python-pid
+spotify
+vicinae-bin
+vicinae-bin-debug
+wd719x-firmware
+wlogout
+wlogout-debug
+yay
+yay-debug
+zen-browser-bin
