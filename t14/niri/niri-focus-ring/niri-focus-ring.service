@@ -5,6 +5,8 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
+Environment=GDK_GL=always
+Environment=NIRI_FOCUS_RING_DEBUG=0
 ExecStart=/usr/bin/python3 %h/.local/bin/niri-focus-ring-daemon.py
 Restart=always
 RestartSec=0.5
