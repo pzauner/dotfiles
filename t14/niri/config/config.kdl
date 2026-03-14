@@ -1,0 +1,170 @@
+include "/usr/share/doc/niri/default-config.kdl"
+
+input {
+    // Keep Mod on Super/Meta even in nested sessions.
+    mod-key "Super"
+    mod-key-nested "Super"
+    keyboard {
+        repeat-delay 250
+        repeat-rate 45
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        scroll-method "two-finger"
+        scroll-factor vertical=1.0 horizontal=1.0
+        tap-button-map "left-right-middle"
+        click-method "clickfinger"
+    }
+    trackpoint {
+        off
+    }
+}
+
+// Smoother, slightly springy focus transitions without changing window size permanently.
+animations {
+    workspace-switch {
+        spring damping-ratio=0.92 stiffness=900 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        spring damping-ratio=0.90 stiffness=860 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=0.90 stiffness=860 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.95 stiffness=900 epsilon=0.0001
+    }
+}
+
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
+workspace "6"
+workspace "7"
+workspace "8"
+workspace "9"
+
+// Start notifications in addition to the default startup apps.
+spawn-at-startup "mako"
+// The default config starts waybar; stop it because we use dankbar instead.
+spawn-at-startup "pkill" "-x" "waybar"
+spawn-at-startup "flatpak" "run" "in.cinny.Cinny"
+spawn-at-startup "flatpak" "run" "org.telegram.desktop"
+spawn-at-startup "flatpak" "run" "org.signal.Signal"
+spawn-at-startup "bitwarden"
+spawn-at-startup "alacritty" "--title" "ws3-bootstrap"
+
+// Custom shortcut: Super/Mod + E opens Dolphin.
+binds {
+    Mod+E { spawn "~/.local/bin/dolphin-dms-themed"; }
+    Mod+Return { spawn "alacritty"; }
+    // Toggle launcher: close if running, otherwise open.
+    Mod+D { spawn-sh "pkill -x fuzzel || exec fuzzel"; }
+    // Mac-like launcher key.
+    Mod+Space { spawn-sh "pkill -x fuzzel || exec fuzzel"; }
+    // Mac-like close-window key.
+    Mod+W { close-window; }
+    Mod+B { spawn-sh "cur=$(busctl --system get-property org.freedesktop.UPower.PowerProfiles /org/freedesktop/UPower/PowerProfiles org.freedesktop.UPower.PowerProfiles ActiveProfile | awk -F'\"' '{print $2}'); next=performance; [ \"$cur\" = performance ] && next=power-saver; [ \"$cur\" = power-saver ] && next=balanced; busctl --system call org.freedesktop.UPower.PowerProfiles /org/freedesktop/UPower/PowerProfiles org.freedesktop.DBus.Properties Set ssv org.freedesktop.UPower.PowerProfiles ActiveProfile s \"$next\" >/dev/null"; }
+    Super+Alt+L { spawn "dms" "ipc" "call" "lock" "lock"; }
+    // Fixed named workspaces 1..9.
+    Mod+1 { focus-workspace "1"; }
+    Mod+2 { focus-workspace "2"; }
+    Mod+3 { focus-workspace "3"; }
+    Mod+4 { focus-workspace "4"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+6 { focus-workspace "6"; }
+    Mod+7 { focus-workspace "7"; }
+    Mod+8 { focus-workspace "8"; }
+    Mod+9 { focus-workspace "9"; }
+
+    // Width resize alternatives for DE keyboards and numpad.
+    Mod+KP_Subtract { set-column-width "-10%"; }
+    Mod+KP_Add      { set-column-width "+10%"; }
+    Mod+ssharp      { set-column-width "-10%"; }
+    Mod+plus        { set-column-width "+10%"; }
+    // Layout-independent resize keys without Alt/Ctrl claw grip.
+    Mod+Shift+A { set-column-width "-10%"; }
+    Mod+Shift+D { set-column-width "+10%"; }
+
+    // Height resize alternatives.
+    Mod+Shift+KP_Subtract { set-window-height "-10%"; }
+    Mod+Shift+KP_Add      { set-window-height "+10%"; }
+    Mod+Shift+S { set-window-height "-10%"; }
+    Mod+Shift+W { set-window-height "+10%"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "s=/tmp/niri-extra-dim; p=$(brightnessctl -m | awk -F, '{gsub(/%/,\"\",$4); print int($4)}'); if [ \"$p\" -le 0 ]; then dms ipc call night temperature 2500 >/dev/null 2>&1 || true; dms ipc call night enable >/dev/null 2>&1 || true; touch \"$s\"; brightnessctl --class=backlight set 1%; elif [ -f \"$s\" ]; then dms ipc call night disable >/dev/null 2>&1 || true; rm -f \"$s\"; brightnessctl --class=backlight set +10%; else brightnessctl --class=backlight set +10%; fi"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "s=/tmp/niri-extra-dim; p=$(brightnessctl -m | awk -F, '{gsub(/%/,\"\",$4); print int($4)}'); if [ \"$p\" -gt 1 ]; then t=$((p-10)); [ \"$t\" -lt 1 ] && t=1; brightnessctl --class=backlight set \"${t}%\"; dms ipc call night disable >/dev/null 2>&1 || true; rm -f \"$s\"; elif [ -f \"$s\" ]; then dms ipc call night disable >/dev/null 2>&1 || true; rm -f \"$s\"; brightnessctl --class=backlight set 0; else dms ipc call night temperature 2500 >/dev/null 2>&1 || true; dms ipc call night enable >/dev/null 2>&1 || true; touch \"$s\"; brightnessctl --class=backlight set 1%; fi"; }
+
+    // Move focused window to named workspace 1..9.
+    Mod+Shift+1 { move-window-to-workspace "1"; }
+    Mod+Shift+2 { move-window-to-workspace "2"; }
+    Mod+Shift+3 { move-window-to-workspace "3"; }
+    Mod+Shift+4 { move-window-to-workspace "4"; }
+    Mod+Shift+5 { move-window-to-workspace "5"; }
+    Mod+Shift+6 { move-window-to-workspace "6"; }
+    Mod+Shift+7 { move-window-to-workspace "7"; }
+    Mod+Shift+8 { move-window-to-workspace "8"; }
+    Mod+Shift+9 { move-window-to-workspace "9"; }
+    Mod+F { spawn "~/.local/bin/niri-modf-restore-toggle.sh"; }
+    // Fill only the free remaining width (not full-screen maximize).
+    Mod+Shift+F { expand-column-to-available-width; }
+
+}
+
+// Lock immediately when the laptop lid is closed.
+switch-events {
+    lid-close {
+        spawn "dms" "ipc" "call" "lock" "lock"
+    }
+}
+
+include "dms/layout.kdl"
+include "dms/colors.kdl"
+include "dms/alttab.kdl"
+include "dms/wpblur.kdl"
+include "dms/cursor.kdl"
+
+// Better rounded focus visuals for tiled windows.
+prefer-no-csd
+layout {
+    focus-ring {
+        off
+        active-color "#00000000"
+        inactive-color "#00000000"
+    }
+    border {
+        off
+    }
+    // Keep a little extra space from the left vertical bar.
+    struts {
+        left 5
+    }
+}
+window-rule {
+    geometry-corner-radius 11
+    clip-to-geometry true
+    draw-border-with-background false
+}
+window-rule {
+    match app-id=r#"^(in\.cinny\.Cinny|cinny)$"#
+    open-on-workspace "4"
+}
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop$"#
+    open-on-workspace "4"
+}
+window-rule {
+    match app-id=r#"^org\.signal\.Signal$"#
+    open-on-workspace "4"
+}
+window-rule {
+    match app-id=r#"^Bitwarden$"#
+    open-on-workspace "3"
+}
+window-rule {
+    match app-id=r#"^Alacritty$"# title=r#"^ws3-bootstrap$"#
+    open-on-workspace "3"
+}

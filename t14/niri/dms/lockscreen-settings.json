@@ -1,0 +1,8 @@
+{
+  "enableFprint": true,
+  "loginctlLockIntegration": false,
+  "lockBeforeSuspend": false,
+  "lockAtStartup": false,
+  "maxFprintTries": 15,
+  "lockScreenPowerOffMonitorsOnLock": false
+}
